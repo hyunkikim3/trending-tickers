@@ -12,7 +12,6 @@ HEADERS = {
     "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
 }
 KST = ZoneInfo("Asia/Seoul")
-OUT_DIR = os.environ.get("OUT_DIR", "data")
 COLUMNS = ["scraped_at_kst", "rank", "name", "code", "search_ratio", "price",
            "change", "change_pct", "volume", "open", "high", "low", "per", "roe"]
 
@@ -54,8 +53,8 @@ def scrape():
     if not rows:
         raise RuntimeError("no stock rows parsed")
 
-    os.makedirs(OUT_DIR, exist_ok=True)
-    out = f"{OUT_DIR}/{now.strftime('%Y-%m-%d')}.csv"
+    os.makedirs("data", exist_ok=True)
+    out = f"data/{now.strftime('%Y-%m-%d')}.csv"
     write_header = not os.path.exists(out)
     with open(out, "a", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=COLUMNS)
